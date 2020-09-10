@@ -19,6 +19,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Posenet exporter')
 
     parser.add_argument('-m','--model', type=int, default=101) # integer depth multiplier (50, 75, 100, 101)
+    parser.add_argument('-s','--output_stride', type=int, default=16) # 16
 
     parser.add_argument('-r', '--ONNX_resolution', default="3x480x640", type=valid_tensor,
                     help='ONNX input resolution')
@@ -31,7 +32,7 @@ def parse_args():
 def main():
     args = parse_args()
 
-    model = posenet.load_model(args.model)
+    model = posenet.load_model(args.model, output_stride=args.output_stride)
     
     # Export ONNX file
     input_names = [ "input:0" ]  # this are our standardized in/out nameing (required for runtime)
